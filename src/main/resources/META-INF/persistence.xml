@@ -5,9 +5,9 @@
 		http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="LibrarianPU" transaction-type="JTA">
+    <persistence-unit name="EpargnatorPU" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:/MaDataSource</jta-data-source>
+        <jta-data-source>java:/EpargnatorDS</jta-data-source>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 

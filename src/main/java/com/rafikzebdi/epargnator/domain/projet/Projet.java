@@ -2,7 +2,9 @@ package com.rafikzebdi.epargnator.domain.projet;
 
 import com.rafikzebdi.epargnator.domain.composant.Composant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class Projet {
     private ArrayList<Composant> composants;
     private Date dateLimite;
 
+    @Id
+    @Column(name = "PRJ_NOM", nullable = false)
     public String getName() {
         return name;
     }
