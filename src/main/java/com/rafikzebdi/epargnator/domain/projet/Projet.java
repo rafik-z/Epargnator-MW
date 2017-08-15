@@ -1,22 +1,66 @@
 package com.rafikzebdi.epargnator.domain.projet;
 
 import com.rafikzebdi.epargnator.domain.composant.Composant;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "T_PROJET")
 @XmlRootElement
-public class Projet {
+public class Projet implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     private String name;
-    private ArrayList<Composant> composants;
+    private List<Composant> composants;
     private Date dateLimite;
+
+    public Projet() {
+        super();
+    }
+
+    public Projet(String name, List <Composant> composants, Date dateLimite) {
+        this.name = name;
+        this.composants = composants;
+        this.dateLimite = dateLimite;
+    }
+
+    @Override public String toString() {
+        return "Projet{" +
+                "name='" + name + '\'' +
+                ", composants=" + composants +
+                ", dateLimite=" + dateLimite +
+                '}';
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass () != o.getClass ()) return false;
+
+        Projet projet = (Projet) o;
+
+        return new EqualsBuilder ()
+                .append ( name, projet.name )
+                .append ( composants, projet.composants )
+                .append ( dateLimite, projet.dateLimite )
+                .isEquals ();
+    }
+
+    @Override public int hashCode() {
+        return new HashCodeBuilder ( 17, 37 )
+                .append ( name )
+                .append ( composants )
+                .append ( dateLimite )
+                .toHashCode ();
+    }
 
     @Id
     @Column(name = "PRJ_NOM", nullable = false)
@@ -28,14 +72,18 @@ public class Projet {
         this.name = name;
     }
 
-    public ArrayList <Composant> getComposants() {
+    @ElementCollection
+    @CollectionTable(name="T_COMPOSANT", joinColumns=@JoinColumn(name="composant_id"))
+    @Column(name="composant_id", nullable = true)
+    public List<Composant> getComposants() {
         return composants;
     }
 
-    public void setComposants(ArrayList <Composant> composants) {
+    public void setComposants(List <Composant> composants) {
         this.composants = composants;
     }
 
+    @Column(name="dateLimite")
     public Date getDateLimite() {
         return dateLimite;
     }

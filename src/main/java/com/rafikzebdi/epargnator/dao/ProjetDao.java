@@ -20,4 +20,13 @@ public class ProjetDao {
         final List<Projet> projetsFound = query.getResultList ();
         return projetsFound;
     }
+
+    public Projet getProject(final String reference){
+        return em.find ( Projet.class, reference );
+    }
+
+    public Projet addProjet (final Projet projetToAdd){
+        em.persist ( projetToAdd );
+        return projetToAdd;
+    }
 }

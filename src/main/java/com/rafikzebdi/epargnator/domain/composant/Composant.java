@@ -5,10 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
@@ -16,14 +13,21 @@ import java.io.Serializable;
 @Table(name = "T_COMPOSANT")
 @XmlRootElement
 public class Composant implements Serializable {
-    private String nom;
+    private static final long serialVersionUID = 1L;
+    private int composant_id;
+    private String name;
 
     private int montant;
 
     private int importance;
 
-    public Composant(final String nom, final int montant, final int importance) {
-        this.nom = nom;
+    public Composant(){
+        super();
+    }
+
+    public Composant(final int composant_id, final String name, final int montant, final int importance) {
+        this.composant_id = composant_id;
+        this.name = name;
         this.montant = montant;
         this.importance = importance;
     }
@@ -40,15 +44,17 @@ public class Composant implements Serializable {
         final Composant composant = (Composant) object;
 
         return new EqualsBuilder ()
+                .append ( this.composant_id, composant.composant_id )
                 .append ( this.montant, composant.montant )
                 .append ( this.importance, composant.importance )
-                .append ( this.nom, composant.nom )
+                .append ( this.name, composant.name )
                 .isEquals ();
     }
 
     @Override public int hashCode() {
         return new HashCodeBuilder ( 17, 37 )
-                .append ( this.nom )
+                .append ( this.composant_id )
+                .append ( this.name )
                 .append ( this.montant )
                 .append ( this.importance )
                 .toHashCode ();
@@ -56,23 +62,37 @@ public class Composant implements Serializable {
 
     @Override public String toString() {
         return new ToStringBuilder ( this, ToStringStyle.SIMPLE_STYLE )
-                .append ( "Nom : " + this.nom )
+                .append ( "ID : " + this.composant_id )
+                .append ( "Nom : " + this.name )
                 .append ( "Montant : "+ this.montant )
                 .append ( "Importance : "+this.importance )
                 .build ();
     }
 
+
     @Id
-    @Column(name = "COMP_NOM",nullable = false)
-    public String getNom() {
-        return nom;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    public int getComposant_id() {
+        return composant_id;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setComposant_id(int composant_id) {
+        this.composant_id = composant_id;
     }
 
-    @Column(name="COMP_MONTANT", nullable = false)
+
+
+    @Column(name = "COMP_NOM",nullable = true)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name="COMP_MONTANT", nullable = true)
     public int getMontant() {
         return montant;
     }
@@ -81,7 +101,7 @@ public class Composant implements Serializable {
         this.montant = montant;
     }
 
-    @Column(name = "COMP_IMPORTANCE")
+    @Column(name = "COMP_IMPORTANCE", nullable = true)
     public int getImportance() {
         return importance;
     }
