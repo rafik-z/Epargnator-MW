@@ -14,11 +14,15 @@ public class ComposantService {
     @EJB
     private ComposantDao composantDao;
 
-    public Composant getComposant(final String composantToGet) throws ComposantInvalidException {
+    public Composant getComposant(final int composantToGet) throws ComposantInvalidException {
         try {
             return composantDao.getComposant ( composantToGet );
         } catch (ComposantInvalidException e) {
             throw e;
         }
+    }
+
+    public void addComposant(final Composant composant) {
+        composantDao.addComposant ( composant );
     }
 }

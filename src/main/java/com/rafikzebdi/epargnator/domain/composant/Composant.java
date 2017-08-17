@@ -25,8 +25,7 @@ public class Composant implements Serializable {
         super();
     }
 
-    public Composant(final int composant_id, final String name, final int montant, final int importance) {
-        this.composant_id = composant_id;
+    public Composant(final String name, final int montant, final int importance) {
         this.name = name;
         this.montant = montant;
         this.importance = importance;
@@ -72,7 +71,7 @@ public class Composant implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "COMP_ID")
     public int getComposant_id() {
         return composant_id;
     }

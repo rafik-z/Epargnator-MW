@@ -21,6 +21,10 @@ public class ProjetDao {
         return projetsFound;
     }
 
+    public void autoAdd(final Projet projet){
+        em.persist ( projet );
+    }
+
     public Projet getProject(final String reference){
         return em.find ( Projet.class, reference );
     }

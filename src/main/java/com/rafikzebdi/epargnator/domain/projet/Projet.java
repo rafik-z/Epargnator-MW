@@ -72,9 +72,13 @@ public class Projet implements Serializable{
         this.name = name;
     }
 
-    @ElementCollection
-    @CollectionTable(name="T_COMPOSANT", joinColumns=@JoinColumn(name="composant_id"))
-    @Column(name="composant_id", nullable = true)
+    @OneToMany
+    @JoinTable(
+            name = "T_PROJET_COMPOSANT",
+            joinColumns = @JoinColumn(name = "PROJ_ID"),
+            inverseJoinColumns = @JoinColumn(name = "COMP_ID")
+    )
+
     public List<Composant> getComposants() {
         return composants;
     }
@@ -83,7 +87,7 @@ public class Projet implements Serializable{
         this.composants = composants;
     }
 
-    @Column(name="dateLimite")
+    @Column(name="PRJ_DATE")
     public Date getDateLimite() {
         return dateLimite;
     }

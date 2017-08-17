@@ -14,7 +14,7 @@ public class ComposantDao {
     @PersistenceContext
     private EntityManager em;
 
-    public Composant getComposant(final String composantToGet) throws ComposantInvalidException {
+    public Composant getComposant(final int composantToGet) throws ComposantInvalidException {
         final Composant foundComposant = em.find ( Composant.class, composantToGet );
         if (foundComposant == null){
             throw new ComposantInvalidException ( "Composant NULL" );

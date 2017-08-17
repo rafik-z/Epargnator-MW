@@ -22,7 +22,7 @@ public class ComposantRS {
     @GET
     @Path ( "{composant}" )
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getComposant(@PathParam ( "composant" )final String composantReference){
+    public Response getComposant(@PathParam ( "composant" )final int composantReference){
         Response.ResponseBuilder builder = null;
 
         try {

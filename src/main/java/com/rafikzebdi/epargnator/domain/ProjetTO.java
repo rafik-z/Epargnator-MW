@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -15,59 +17,71 @@ import java.util.Date;
 public class ProjetTO implements Serializable{
     private String name;
     private Date dateLimite;
-    private Composant composant_1;
-    private Composant composant_2;
-    private Composant composant_3;
-    private Composant composant_4;
-    private Composant composant_5;
+    private int nbrComposants;
+    private Composant composant_1 = null;
+    private Composant composant_2 = null;
+    private Composant composant_3 = null;
+    private Composant composant_4 = null;
+    private Composant composant_5 = null;
 
     public ProjetTO() {
+        super();
+
     }
 
     public ProjetTO(String name, Date dateLimite) {
         this.name = name;
         this.dateLimite = dateLimite;
+        this.nbrComposants = 0;
     }
 
-    public ProjetTO(String name, Date dateLimite, Composant composant_1) {
+    public ProjetTO(String name, Date dateLimite,
+                    Composant composant_1) {
         this.name = name;
         this.dateLimite = dateLimite;
+        this.nbrComposants = 1;
         this.composant_1 = composant_1;
     }
 
-    public ProjetTO(String name, Date dateLimite, Composant composant_1,
-                    Composant composant_2) {
+    public ProjetTO(String name, Date dateLimite,
+                    Composant composant_1, Composant composant_2) {
         this.name = name;
         this.dateLimite = dateLimite;
+        this.nbrComposants = 2;
         this.composant_1 = composant_1;
         this.composant_2 = composant_2;
     }
 
-    public ProjetTO(String name, Date dateLimite, Composant composant_1,
-                    Composant composant_2, Composant composant_3) {
+    public ProjetTO(String name, Date dateLimite,
+                    Composant composant_1, Composant composant_2,
+                    Composant composant_3) {
         this.name = name;
         this.dateLimite = dateLimite;
+        this.nbrComposants = 3;
         this.composant_1 = composant_1;
         this.composant_2 = composant_2;
         this.composant_3 = composant_3;
     }
 
-    public ProjetTO(String name, Date dateLimite, Composant composant_1,
-                    Composant composant_2, Composant composant_3,
-                    Composant composant_4) {
+    public ProjetTO(String name, Date dateLimite,
+                     Composant composant_1, Composant composant_2,
+                     Composant composant_3, Composant composant_4) {
         this.name = name;
         this.dateLimite = dateLimite;
+        this.nbrComposants = 4;
         this.composant_1 = composant_1;
         this.composant_2 = composant_2;
         this.composant_3 = composant_3;
         this.composant_4 = composant_4;
     }
 
-    public ProjetTO(String name, Date dateLimite, Composant composant_1,
-                    Composant composant_2, Composant composant_3,
-                    Composant composant_4, Composant composant_5) {
+    public ProjetTO(String name, Date dateLimite,
+                    Composant composant_1, Composant composant_2,
+                    Composant composant_3, Composant composant_4,
+                    Composant composant_5) {
         this.name = name;
         this.dateLimite = dateLimite;
+        this.nbrComposants = 5;
         this.composant_1 = composant_1;
         this.composant_2 = composant_2;
         this.composant_3 = composant_3;
@@ -79,6 +93,7 @@ public class ProjetTO implements Serializable{
         return "ProjetTO{" +
                 "name='" + name + '\'' +
                 ", dateLimite=" + dateLimite +
+                ", nbrComposants=" + nbrComposants +
                 ", composant_1=" + composant_1 +
                 ", composant_2=" + composant_2 +
                 ", composant_3=" + composant_3 +
@@ -97,6 +112,7 @@ public class ProjetTO implements Serializable{
         return new EqualsBuilder ()
                 .append ( name, projetTO.name )
                 .append ( dateLimite, projetTO.dateLimite )
+                .append ( nbrComposants, projetTO.nbrComposants )
                 .append ( composant_1, projetTO.composant_1 )
                 .append ( composant_2, projetTO.composant_2 )
                 .append ( composant_3, projetTO.composant_3 )
@@ -109,6 +125,7 @@ public class ProjetTO implements Serializable{
         return new HashCodeBuilder ( 17, 37 )
                 .append ( name )
                 .append ( dateLimite )
+                .append ( nbrComposants )
                 .append ( composant_1 )
                 .append ( composant_2 )
                 .append ( composant_3 )
@@ -131,8 +148,18 @@ public class ProjetTO implements Serializable{
         return dateLimite;
     }
 
-    public void setDateLimite(Date dateLimite) {
-        this.dateLimite = dateLimite;
+    public void setDateLimite(String dateLimite) throws ParseException {
+
+        Date date = new SimpleDateFormat ( "yyyy-MM-dd" ).parse ( dateLimite );
+        this.dateLimite = date;
+    }
+
+    public int getNbrComposants() {
+        return nbrComposants;
+    }
+
+    public void setNbrComposants(int nbrComposants) {
+        this.nbrComposants = nbrComposants;
     }
 
     public Composant getComposant_1() {

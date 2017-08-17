@@ -15,6 +15,10 @@ public class ProjetService {
     @EJB
     private ProjetDao projetDao;
 
+    public void autoAdd(final Projet projet){
+        projetDao.autoAdd ( projet );
+    }
+
     public Projet addProjet(final Projet projetToAdd){
         final Projet addedProjet = projetDao.addProjet ( projetToAdd );
         return addedProjet;
