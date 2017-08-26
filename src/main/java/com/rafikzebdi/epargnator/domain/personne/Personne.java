@@ -1,5 +1,6 @@
 package com.rafikzebdi.epargnator.domain.personne;
 
+import com.rafikzebdi.epargnator.domain.charge.Charge;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -14,6 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "T_PERSONNE")
@@ -24,21 +26,22 @@ public class Personne implements Serializable{
     private Date dateCreation;
     private Date dateMiseAJour;
     private int revenu;
-    private DateFormat df = new SimpleDateFormat ( "dd/MM/yy" );
+    private List<Charge> chargesPersonne;
 
     public Personne(){
         super();
     }
 
-    public Personne(String name) {
+    public Personne(final String name) {
         super();
         this.name = name;
         this.dateCreation = Date.from ( Instant.now () );
         this.dateMiseAJour = Date.from ( Instant.now () );
         this.revenu = 0;
+        this.chargesPersonne = null;
     }
 
-    public Personne(String name, int revenu) {
+    public Personne(final String name, final int revenu) {
         super();
         this.name = name;
         this.dateCreation = Date.from ( Instant.now () );
@@ -115,5 +118,13 @@ public class Personne implements Serializable{
 
     public void setRevenu(int revenu) {
         this.revenu = revenu;
+    }
+
+    public List<Charge> getChargesPersonne() {
+        return chargesPersonne;
+    }
+
+    public void setChargesPersonne(List<Charge> chargesPersonne) {
+        this.chargesPersonne = chargesPersonne;
     }
 }
