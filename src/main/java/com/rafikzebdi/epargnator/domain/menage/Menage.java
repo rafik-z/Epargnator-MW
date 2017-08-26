@@ -27,6 +27,15 @@ public class Menage implements Serializable{
         super();
     }
 
+    public Menage(String name, Date dateCreation, Date dateMiseAJour, Personne p1) {
+        super();
+        this.name = name;
+        this.dateCreation = dateCreation;
+        this.dateMiseAJour = dateMiseAJour;
+        this.p1 = p1;
+        this.p2 = null;
+    }
+
     public Menage(String name, Date dateCreation, Date dateMiseAJour, Personne p1,
                   Personne p2) {
         super();

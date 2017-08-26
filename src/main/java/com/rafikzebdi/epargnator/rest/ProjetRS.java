@@ -61,6 +61,35 @@ public class ProjetRS {
         return builder.build ();
     }
 
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateProjet(@PathParam("id")final String reference, final ProjetTO inputProjet){
+        Response.ResponseBuilder builder = null;
+
+        try {
+            final Projet projetToUpdate = formProjet(inputProjet);
+            projetService.updateProjet(projetToUpdate);
+            builder = Response.ok(projetToUpdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            builder = Response.status(Response.Status.BAD_REQUEST);
+        }
+
+        return builder.build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteProjet(@PathParam("id") final String idToDelete){
+        Response.ResponseBuilder builder = null;
+
+        projetService.deleteProjet(idToDelete);
+
+        return builder.build();
+    }
+
     private Projet formProjet(final ProjetTO projetToModify) throws Exception {
         final int loop = projetToModify.getNbrComposants ();
         final String name = projetToModify.getName ();

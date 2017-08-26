@@ -2,6 +2,7 @@ package com.rafikzebdi.epargnator.domain.charge;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,31 +28,38 @@ public class Charge {
         this.montant = montant;
     }
 
-    @Override public boolean equals(Object o) {
-        if (this == o) return true;
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object){
+            return true;
+        }
 
-        if (o == null || getClass () != o.getClass ()) return false;
+        if (object == null || getClass () != object.getClass ()){
+            return false;
+        }
 
-        Charge charge = (Charge) o;
+        final Charge charge = (Charge) object;
 
         return new EqualsBuilder ()
-                .append ( montant, charge.montant )
-                .append ( name, charge.name )
-                .isEquals ();
+                .append ( this.montant, charge.montant )
+                .append ( this.name, charge.name )
+                .build();
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return new HashCodeBuilder ( 17, 37 )
-                .append ( name )
-                .append ( montant )
-                .toHashCode ();
+                .append ( this.name )
+                .append ( this.montant )
+                .build();
     }
 
-    @Override public String toString() {
-        return "Charge{" +
-                "name='" + name + '\'' +
-                ", montant=" + montant +
-                '}';
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(this.name)
+                .append(this.montant)
+                .build();
     }
 
     @Id

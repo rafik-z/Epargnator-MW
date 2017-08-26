@@ -33,4 +33,13 @@ public class ProjetDao {
         em.persist ( projetToAdd );
         return projetToAdd;
     }
+
+    public void updateProjet(final Projet projetToUpdate){
+        em.merge(projetToUpdate);
+    }
+
+    public void deleteProjet(final String idToDelete) {
+        final Projet projetToDelete = em.find(Projet.class, idToDelete);
+        em.remove(projetToDelete);
+    }
 }

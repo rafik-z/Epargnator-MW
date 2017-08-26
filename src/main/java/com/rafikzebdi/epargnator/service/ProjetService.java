@@ -27,4 +27,12 @@ public class ProjetService {
     public List<Projet> getAllProjets() {
         return projetDao.getAllProjects ();
     }
+
+    public void updateProjet(final Projet projetToUpdate){
+        projetDao.updateProjet(projetToUpdate);
+    }
+
+    public void deleteProjet(final String idToDelete) {
+        projetDao.deleteProjet(idToDelete);
+    }
 }
