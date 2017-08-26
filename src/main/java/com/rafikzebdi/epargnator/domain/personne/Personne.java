@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
@@ -22,6 +24,7 @@ public class Personne implements Serializable{
     private Date dateCreation;
     private Date dateMiseAJour;
     private int revenu;
+    private DateFormat df = new SimpleDateFormat ( "dd/MM/yy" );
 
     public Personne(){
         super();
