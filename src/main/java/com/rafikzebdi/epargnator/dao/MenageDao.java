@@ -24,7 +24,10 @@ public class MenageDao {
     }
 
     public List<Menage> getSpecificMenage(final String menageToFind){
-        List<Menage> foundMenages = new ArrayList <Menage> (  );
+        final String jpqlQuery = "SELECT m FROM Menage m WHERE m.name LIKE :criteria";
+        final TypedQuery<Menage> query = em.createQuery ( jpqlQuery, Menage.class );
+        query.setParameter ( "criteria", '%'+menageToFind+'%' );
+        final List<Menage> foundMenages = query.getResultList ();
 
         return foundMenages;
     }
@@ -34,13 +37,13 @@ public class MenageDao {
         em.persist ( menageToAdd );
     }
 
-    public void updateMenage(final Menage menageToUpdate){
-        em.merge ( menageToUpdate );
+    public void modifyMenage(final Menage menageToModify){
+        em.merge ( menageToModify );
     }
 
     public void deleteMenage(final String idToDelete) throws ChargeInvalidException {
         final Menage foundMenage = em.find ( Menage.class, idToDelete );
-        if(foundMenage==null){
+        if(foundMenage == null){
             throw new ChargeInvalidException("Charge NULL");
         }
         em.remove ( foundMenage);

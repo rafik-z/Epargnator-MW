@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;

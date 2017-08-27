@@ -6,9 +6,11 @@ import com.rafikzebdi.epargnator.domain.composant.ComposantInvalidException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 
 @Stateless
+@Transactional
 public class ComposantService {
 
     @EJB
