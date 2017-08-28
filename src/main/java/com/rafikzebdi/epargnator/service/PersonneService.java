@@ -36,4 +36,9 @@ public class PersonneService {
     public void deletePersonne(final String reference){
         personneDao.deletePersonne ( reference );
     }
+
+    private boolean validatePersonne(final Personne personneToValidate){
+        //TODO : implementer la methode de verification
+        return true;
+    }
 }
