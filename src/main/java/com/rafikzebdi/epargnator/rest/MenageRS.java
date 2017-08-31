@@ -52,6 +52,7 @@ public class MenageRS {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addMenage(final Menage menageToAdd){
         Response.ResponseBuilder builder = null;
@@ -68,6 +69,7 @@ public class MenageRS {
     }
 
     @PUT
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyMenage(final Menage menageToModify){
         Response.ResponseBuilder builder = null;

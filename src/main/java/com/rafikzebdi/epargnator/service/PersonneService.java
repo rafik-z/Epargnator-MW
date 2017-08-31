@@ -25,8 +25,10 @@ public class PersonneService {
         return personneDao.getSpecificPersonne ( personneToFind );
     }
 
-    public void addPersonne(final Personne personneToAdd){
-        personneDao.addPersonne ( personneToAdd );
+    public Personne addPersonne(final Personne personneToAdd){
+
+        final Personne personne = personneDao.addPersonne ( personneToAdd );
+        return personne;
     }
 
     public void modifyPersonne(final Personne personneToModify){

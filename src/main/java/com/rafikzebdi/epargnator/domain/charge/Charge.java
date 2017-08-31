@@ -4,17 +4,16 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "T_CHARGES")
 @XmlRootElement
-public class Charge {
+public class Charge implements Serializable{
 
+    private int id;
     private String name;
     private int montant;
 
@@ -41,6 +40,7 @@ public class Charge {
         final Charge charge = (Charge) object;
 
         return new EqualsBuilder ()
+                .append ( this.id, charge.id )
                 .append ( this.montant, charge.montant )
                 .append ( this.name, charge.name )
                 .build();
@@ -49,6 +49,7 @@ public class Charge {
     @Override
     public int hashCode() {
         return new HashCodeBuilder ( 17, 37 )
+                .append ( this.id )
                 .append ( this.name )
                 .append ( this.montant )
                 .build();
@@ -57,12 +58,19 @@ public class Charge {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .append ( this.id )
                 .append(this.name)
                 .append(this.montant)
                 .build();
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="CHA_ID")
+    public int getId(){return id;}
+
+    public void setId(final int id){this.id = id;}
+
     @Column(name = "CHA_NAME")
     public String getName() {
         return name;
