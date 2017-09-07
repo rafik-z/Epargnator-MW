@@ -1,14 +1,14 @@
 package com.rafikzebdi.epargnator.rest;
 
 import com.rafikzebdi.epargnator.domain.ProjetTO;
-import com.rafikzebdi.epargnator.domain.composant.Composant;
 import com.rafikzebdi.epargnator.domain.projet.Projet;
 import com.rafikzebdi.epargnator.service.ComposantService;
 import com.rafikzebdi.epargnator.service.ProjetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.jws.WebService;
-import javax.transaction.Status;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,6 +21,8 @@ import java.util.List;
 @Path ( "/projet" )
 public class ProjetRS {
 
+    static final Logger LOG = LoggerFactory.getLogger ( ProjetRS.class );
+
     private Projet projetToSend = null;
 
     @EJB
@@ -32,12 +34,15 @@ public class ProjetRS {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllProjets(){
         Response.ResponseBuilder builder = null;
+        LOG.info ( "Requête GET reçue." );
 
         try {
             final List<Projet> projets = projetService.getAllProjets();
             builder = Response.ok (projets);
+            LOG.info ( "Requête GET executée avec succés." );
         } catch (Exception e) {
-            builder = Response.status ( Status.STATUS_NO_TRANSACTION );
+            builder = Response.status ( Response.Status.BAD_REQUEST );
+            LOG.error ( "Requête GET : BAD REQUEST" );
         }
 
         return builder.build ();
@@ -90,7 +95,7 @@ public class ProjetRS {
         return builder.build();
     }
 
-    private Projet formProjet(final ProjetTO projetToModify) throws Exception {
+    private Projet formProjet(final ProjetTO projetToModify){
         final int loop = projetToModify.getNbrComposants ();
         final String name = projetToModify.getName ();
         final Date dateLimite = projetToModify.getDateLimite ();

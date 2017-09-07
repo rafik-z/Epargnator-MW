@@ -27,8 +27,7 @@ public class PersonneService {
 
     public Personne addPersonne(final Personne personneToAdd){
 
-        final Personne personne = personneDao.addPersonne ( personneToAdd );
-        return personne;
+        return personneDao.addPersonne ( personneToAdd );
     }
 
     public void modifyPersonne(final Personne personneToModify){

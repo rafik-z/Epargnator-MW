@@ -20,8 +20,7 @@ public class ProjetService {
     }
 
     public Projet addProjet(final Projet projetToAdd){
-        final Projet addedProjet = projetDao.addProjet ( projetToAdd );
-        return addedProjet;
+        return projetDao.addProjet ( projetToAdd );
     }
 
     public List<Projet> getAllProjets() {

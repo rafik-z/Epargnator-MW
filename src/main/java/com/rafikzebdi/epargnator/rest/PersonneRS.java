@@ -47,8 +47,8 @@ public class PersonneRS {
         Response.ResponseBuilder builder = null;
 
         try {
-            final List<Personne> personnesFound = personneService.getSpecificPersonne ( referenceToFind );
-            builder = Response.ok (personnesFound);
+            final List<Personne> personnesSpecificFound = personneService.getSpecificPersonne ( referenceToFind );
+            builder = Response.ok (personnesSpecificFound);
         } catch (Exception e) {
             e.printStackTrace ();
             builder = Response.status ( Response.Status.BAD_REQUEST );
