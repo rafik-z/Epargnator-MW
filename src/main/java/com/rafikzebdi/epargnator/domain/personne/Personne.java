@@ -17,6 +17,7 @@ import java.util.List;
 @XmlRootElement
 public class Personne implements Serializable{
 
+    private int id;
     private String name;
     private Date dateCreation;
     private Date dateMiseAJour;
@@ -47,6 +48,7 @@ public class Personne implements Serializable{
     @Override public String toString() {
         return new ToStringBuilder ( this )
                 .append ( "Personne{" )
+                .append ( "id = '"+this.id )
                 .append ( "name = '"+this.name )
                 .append ( "' , dateCreation = '"+this.dateCreation )
                 .append ( "' , dateMAJ = '"+this.dateMiseAJour )
@@ -62,23 +64,35 @@ public class Personne implements Serializable{
         Personne personne = (Personne) o;
 
         return new EqualsBuilder ()
-                .append ( revenu, personne.revenu )
-                .append ( name, personne.name )
-                .append ( dateCreation, personne.dateCreation )
-                .append ( dateMiseAJour, personne.dateMiseAJour )
+                .append ( this.id, personne.id )
+                .append ( this.revenu, personne.revenu )
+                .append ( this.name, personne.name )
+                .append ( this.dateCreation, personne.dateCreation )
+                .append ( this.dateMiseAJour, personne.dateMiseAJour )
                 .isEquals ();
     }
 
     @Override public int hashCode() {
         return new HashCodeBuilder ( 17, 37 )
-                .append ( name )
-                .append ( dateCreation )
-                .append ( dateMiseAJour )
-                .append ( revenu )
+                .append ( this.id )
+                .append ( this.name )
+                .append ( this.dateCreation )
+                .append ( this.dateMiseAJour )
+                .append ( this.revenu )
                 .toHashCode ();
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PER_ID", nullable = false)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Column(name = "PER_NAME", nullable = false)
     public String getName() {
         return name;
@@ -115,7 +129,7 @@ public class Personne implements Serializable{
         this.revenu = revenu;
     }
 
-    @ElementCollection
+    @ElementCollection(targetClass = Charge.class, fetch = FetchType.EAGER)
     public List<Charge> getChargesPersonne() {
         return chargesPersonne;
     }

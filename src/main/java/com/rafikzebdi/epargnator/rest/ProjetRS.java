@@ -90,7 +90,13 @@ public class ProjetRS {
     public Response deleteProjet(@PathParam("id") final String idToDelete){
         Response.ResponseBuilder builder = null;
 
-        projetService.deleteProjet(idToDelete);
+
+        try {
+            projetService.deleteProjet(idToDelete);
+            builder = Response.ok ();
+        } catch (Exception e) {
+            builder = Response.status ( Response.Status.BAD_REQUEST );
+        }
 
         return builder.build();
     }

@@ -4,6 +4,7 @@ import com.rafikzebdi.epargnator.domain.charge.Charge;
 import com.rafikzebdi.epargnator.domain.personne.Personne;
 import com.rafikzebdi.epargnator.service.ChargeService;
 import com.rafikzebdi.epargnator.service.PersonneService;
+import jdk.nashorn.internal.parser.JSONParser;
 
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -11,6 +12,8 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 
 @Transactional
@@ -43,7 +46,7 @@ public class PersonneRS {
     @GET
     @Path ( "/{reference}" )
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSpecificPersonne(@PathParam ( "reference" )final String referenceToFind){
+    public Response getSpecificPersonne(@PathParam ( "reference" )final int referenceToFind){
         Response.ResponseBuilder builder = null;
 
         try {
@@ -66,8 +69,8 @@ public class PersonneRS {
 
         try {
             formPersonne ( personneToAdd );
-            personneService.addPersonne ( personneToAdd );
-            builder = Response.ok ();
+            final Personne per = personneService.addPersonne ( personneToAdd );
+            builder = Response.ok (per);
         } catch (Exception e) {
             e.printStackTrace ();
             builder = Response.status ( Response.Status.BAD_REQUEST );
@@ -84,6 +87,7 @@ public class PersonneRS {
         Response.ResponseBuilder builder = null;
 
         try {
+            personneToModify.setDateMiseAJour ( Date.from ( Instant.now ()) );
             personneService.modifyPersonne ( personneToModify );
             builder = Response.ok (personneToModify);
         } catch (Exception e) {
@@ -98,14 +102,13 @@ public class PersonneRS {
     @DELETE
     @Path ( "/{reference}" )
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePersonne(@PathParam ( "reference" ) final String referenceToDelete){
+    public Response deletePersonne(@PathParam ( "reference" ) final int referenceToDelete){
         Response.ResponseBuilder builder = null;
 
         try {
             personneService.deletePersonne ( referenceToDelete );
-            builder = Response.ok (referenceToDelete);
+            builder = Response.ok ( referenceToDelete);
         } catch (Exception e) {
-            e.printStackTrace ();
             builder = Response.status ( Response.Status.BAD_REQUEST );
         }
 

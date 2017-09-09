@@ -20,7 +20,7 @@ public class PersonneService {
         return personneDao.getAllPersonne ();
 
     }
-    public List<Personne> getSpecificPersonne(final String personneToFind){
+    public List<Personne> getSpecificPersonne(final int personneToFind){
 
         return personneDao.getSpecificPersonne ( personneToFind );
     }
@@ -34,7 +34,7 @@ public class PersonneService {
         personneDao.updatePersonne ( personneToModify );
     }
 
-    public void deletePersonne(final String reference){
+    public void deletePersonne(final int reference){
         personneDao.deletePersonne ( reference );
     }
 
