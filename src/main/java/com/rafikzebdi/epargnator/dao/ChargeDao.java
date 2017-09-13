@@ -16,4 +16,8 @@ public class ChargeDao{
     public void addCharge(Charge chargeToAdd) {
         em.persist ( chargeToAdd );
     }
+
+    public void modifyCharge(Charge charge) {
+        em.merge ( charge );
+    }
 }

@@ -68,7 +68,7 @@ public class PersonneRS {
         Response.ResponseBuilder builder = null;
 
         try {
-            formPersonne ( personneToAdd );
+            formPersonne ( personneToAdd, 0 );
             final Personne per = personneService.addPersonne ( personneToAdd );
             builder = Response.ok (per);
         } catch (Exception e) {
@@ -87,6 +87,7 @@ public class PersonneRS {
         Response.ResponseBuilder builder = null;
 
         try {
+            formPersonne ( personneToModify, 1 );
             personneToModify.setDateMiseAJour ( Date.from ( Instant.now ()) );
             personneService.modifyPersonne ( personneToModify );
             builder = Response.ok (personneToModify);
@@ -115,14 +116,25 @@ public class PersonneRS {
         return builder.build ();
     }
 
-    private void formPersonne(final Personne personneToForm){
+    private void formPersonne(final Personne personneToForm, final int action){
         final int loop = personneToForm.getChargesPersonne ().size ();
         final List<Charge> charges = personneToForm.getChargesPersonne ();
 
-        if (loop > 0) {
-            for (Charge charge:charges) {
-                chargeService.addCharge ( charge );
-            }
+        switch (action){
+            case 0:
+                if (loop > 0) {
+                    for (Charge charge:charges) {
+                        chargeService.addCharge ( charge );
+                    }
+                }
+                break;
+            case 1:
+                if (loop > 0) {
+                    for (Charge charge:charges) {
+                        chargeService.modifyCharge ( charge );
+                    }
+                }
+                break;
         }
 
     }

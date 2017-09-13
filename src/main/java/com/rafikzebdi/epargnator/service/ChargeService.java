@@ -19,4 +19,7 @@ public class ChargeService {
     }
 
 
+    public void modifyCharge(final Charge charge) {
+        chargeDao.modifyCharge(charge);
+    }
 }

@@ -2,6 +2,8 @@ package com.rafikzebdi.epargnator.dao;
 
 import com.rafikzebdi.epargnator.domain.charge.Charge;
 import com.rafikzebdi.epargnator.domain.personne.Personne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
