@@ -1,6 +1,7 @@
 package com.rafikzebdi.epargnator.rest;
 
 import com.rafikzebdi.epargnator.domain.ProjetTO;
+import com.rafikzebdi.epargnator.domain.composant.Composant;
 import com.rafikzebdi.epargnator.domain.projet.Projet;
 import com.rafikzebdi.epargnator.service.ComposantService;
 import com.rafikzebdi.epargnator.service.ProjetService;
@@ -27,6 +28,7 @@ public class ProjetRS {
 
     @EJB
     private ProjetService projetService;
+
     @EJB
     private ComposantService composantService;
 
@@ -51,13 +53,13 @@ public class ProjetRS {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addProjet(final ProjetTO inputProjet){
+    public Response addProjet(final Projet inputProjet){
         Response.ResponseBuilder builder = null;
 
         try {
-            final Projet projetToAdd = formProjet (inputProjet);
-            projetService.addProjet ( projetToAdd );
-            builder = Response.ok (projetToAdd);
+            formProjet (inputProjet);
+            projetService.addProjet ( inputProjet );
+            builder = Response.ok ( inputProjet );
         } catch (Exception e) {
             e.printStackTrace ();
             builder = Response.status ( Response.Status.BAD_REQUEST );
@@ -69,13 +71,13 @@ public class ProjetRS {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateProjet(@PathParam("id")final String reference, final ProjetTO inputProjet){
+    public Response updateProjet(@PathParam("id")final String reference, final Projet inputProjet){
         Response.ResponseBuilder builder = null;
 
         try {
-            final Projet projetToUpdate = formProjet(inputProjet);
-            projetService.updateProjet(projetToUpdate);
-            builder = Response.ok(projetToUpdate);
+            formProjet ( inputProjet);
+            projetService.updateProjet(inputProjet);
+            builder = Response.ok(inputProjet);
         } catch (Exception e) {
             e.printStackTrace();
             builder = Response.status(Response.Status.BAD_REQUEST);
@@ -101,60 +103,12 @@ public class ProjetRS {
         return builder.build();
     }
 
-    private Projet formProjet(final ProjetTO projetToModify){
-        final int loop = projetToModify.getNbrComposants ();
-        final String name = projetToModify.getName ();
-        final Date dateLimite = projetToModify.getDateLimite ();
-        switch (loop){
-            case 1: formComposant1 (projetToModify);
-                projetToSend = new Projet (name, projetToModify.getComposant_1 (), dateLimite );
-                break;
-            case 2: formComposant2 (projetToModify);
-                projetToSend = new Projet (name, projetToModify.getComposant_1 (), projetToModify.getComposant_2 (),
-                        dateLimite );
-                break;
-            case 3: formComposant3 (projetToModify);
-                projetToSend = new Projet (name, projetToModify.getComposant_1 (), projetToModify.getComposant_2 (),
-                        projetToModify.getComposant_3 (), dateLimite );
-                break;
-            case 4: formComposant4 (projetToModify);
-                projetToSend = new Projet (name, projetToModify.getComposant_1 (), projetToModify.getComposant_2 (),
-                        projetToModify.getComposant_3 (),projetToModify.getComposant_4 (), dateLimite );
-                break;
-            case 5: formComposant5 (projetToModify);
-                projetToSend = new Projet (name, projetToModify.getComposant_1 (), projetToModify.getComposant_2 (),
-                        projetToModify.getComposant_3 (), projetToModify.getComposant_4 (),projetToModify
-                        .getComposant_5 (), dateLimite );
-                break;
-            default:
-                break;
+    private void formProjet(final Projet projetToForm){
+        final List<Composant> composants= projetToForm.getComposantsProjet ();
+        for (Composant composant:composants) {
+            composantService.addComposant ( composant);
         }
-        return projetToSend;
-    }
 
-
-    private void formComposant1(final ProjetTO projet){
-        composantService.addComposant ( projet.getComposant_1 () );
-    }
-
-    private void formComposant2(final ProjetTO projet){
-        composantService.addComposant ( projet.getComposant_1 () );
-        composantService.addComposant ( projet.getComposant_2 () );
-    }
-
-    private void formComposant3(final ProjetTO projet){
-        formComposant2 ( projet );
-        composantService.addComposant ( projet.getComposant_3 () );
-    }
-
-    private void formComposant4(final ProjetTO projet){
-        formComposant3 ( projet );
-        composantService.addComposant ( projet.getComposant_4 () );
-    }
-
-    private void formComposant5(final ProjetTO projet){
-        formComposant4 ( projet );
-        composantService.addComposant ( projet.getComposant_5 () );
     }
 
 

@@ -13,14 +13,14 @@ import javax.ws.rs.core.Response;
 
 @Transactional
 @WebService
-@Path ( "/projet" )
+@Path ( "/composant" )
 public class ComposantRS {
 
     @EJB
     private ComposantService composantService;
 
     @GET
-    @Path ( "{composant}" )
+    @Path ( "/{composant}" )
     @Produces(MediaType.APPLICATION_JSON)
     public Response getComposant(@PathParam ( "composant" )final int composantReference){
         Response.ResponseBuilder builder = null;
@@ -36,4 +36,20 @@ public class ComposantRS {
 
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addProjet(final Composant composant){
+        Response.ResponseBuilder builder = null;
+
+        try {
+            composantService.addComposant ( composant);
+            builder = Response.ok ( composant);
+        } catch (Exception e) {
+            e.printStackTrace ();
+            builder = Response.status ( Response.Status.BAD_REQUEST );
+        }
+
+        return builder.build ();
+    }
 }

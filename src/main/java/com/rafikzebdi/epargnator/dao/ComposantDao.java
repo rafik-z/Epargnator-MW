@@ -6,9 +6,11 @@ import com.rafikzebdi.epargnator.domain.composant.ComposantInvalidException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 
 @Stateless
+@Transactional
 public class ComposantDao {
 
     @PersistenceContext
